@@ -14,6 +14,8 @@
 
 using namespace std;
 
+unsigned int indices[4930579];
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
 }
@@ -53,37 +55,33 @@ int main() {
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     Assimp::Importer importer;
     std::string path =
-        "/home/pablo/repositorioGit/ICG/triangulo VBO/build/game/OBJ.blend";
+        "/home/shammyz/Downloads/91-anime_character/OBJ.blend";
     const aiScene *scene =
         importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
-    
+
     string directory = path.substr(0, path.find_last_of('/'));
 
-    aiMesh *mesh = scene->mMeshes[];
-    fprintf(stderr, "ROLA");
+    aiMesh *mesh = scene->mMeshes[0];
 
     float vertices[mesh->mNumVertices * 3];
+
     for (unsigned int i = 0; i < mesh->mNumVertices; i = i + 3) {
         vertices[i] = mesh->mVertices[i].x;
         vertices[i + 1] = mesh->mVertices[i].y;
         vertices[i + 2] = mesh->mVertices[i].z;
     }
-    int totalFaces = 0;    
-    for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
-        aiFace face = mesh->mFaces[i];
-        totalFaces += face.mNumIndices;
-    }
-    unsigned int indices[mesh->mNumFaces*totalFaces];
+
     unsigned int k = 0;
-    for (unsigned int i = 0; i < mesh->mNumFaces; i++, k++) {
+    for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
         aiFace face = mesh->mFaces[i];
         for (unsigned int j = 0; j < face.mNumIndices; j++, k++)
             indices[k] = face.mIndices[j];
     }
+
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
@@ -107,7 +105,7 @@ int main() {
     // Malloc and Insert Data into buffer, "Insert into vbo..."
     glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 3 * sizeof(float),
                           (void *)0);
 
     
@@ -139,7 +137,7 @@ int main() {
 
         // Activate VAO
         glBindVertexArray(VAO);
-        glDrawElements(GL_POINTS, 5, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 4930572, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 
         // Deactivate VAO
