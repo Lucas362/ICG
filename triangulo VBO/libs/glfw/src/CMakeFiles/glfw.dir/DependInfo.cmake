@@ -4,21 +4,23 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/cocoa_init.m" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/cocoa_init.m.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/cocoa_joystick.m" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/cocoa_joystick.m.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/cocoa_monitor.m" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/cocoa_monitor.m.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/cocoa_time.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/cocoa_time.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/cocoa_window.m" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/cocoa_window.m.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/context.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/context.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/init.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/init.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/input.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/input.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/monitor.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/monitor.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/nsgl_context.m" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/nsgl_context.m.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/posix_tls.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/posix_tls.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/vulkan.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o"
-  "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/window.c" "/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glfw/src/CMakeFiles/glfw.dir/window.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/context.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/context.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/egl_context.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/glx_context.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/init.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/init.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/input.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/input.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/linux_joystick.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/monitor.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/monitor.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/posix_time.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/posix_tls.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/posix_tls.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/vulkan.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/window.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/window.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/x11_init.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/x11_monitor.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/x11_window.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o"
+  "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/xkb_unicode.c" "/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o"
   )
-set(CMAKE_C_COMPILER_ID "AppleClang")
+set(CMAKE_C_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_C
@@ -27,9 +29,8 @@ set(CMAKE_TARGET_DEFINITIONS_C
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
-  "game/include"
-  "libs/glfw/include"
-  "libs/glfw/src"
+  "include"
+  "src"
   )
 
 # Targets to which this target links.

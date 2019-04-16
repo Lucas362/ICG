@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/carla/git/icg/ICG2019/CG_TESTE_GPU/libs/glad/src/glad.c
+/home/pablo/repositorioGit/ICG/triangulo VBO/libs/glad/src/glad.c
 stdio.h
 -
 stdlib.h
@@ -22,7 +22,7 @@ winapifamily.h
 dlfcn.h
 -
 
-libs/glad/include/KHR/khrplatform.h
+include/KHR/khrplatform.h
 stdint.h
 -
 inttypes.h
@@ -30,7 +30,7 @@ inttypes.h
 stdint.h
 -
 
-libs/glad/include/glad/glad.h
+include/glad/glad.h
 windows.h
 -
 stddef.h
