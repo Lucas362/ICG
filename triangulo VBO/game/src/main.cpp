@@ -14,7 +14,7 @@
 
 using namespace std;
 
-unsigned int indices[4930579];
+unsigned int indices[6300];
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -59,9 +59,9 @@ int main() {
 
     Assimp::Importer importer;
     std::string path =
-        "/home/shammyz/Downloads/91-anime_character/OBJ.blend";
+        "/home/pablo/Boxes.obj";
     const aiScene *scene =
-        importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+        importer.ReadFile(path, 0);
 
     string directory = path.substr(0, path.find_last_of('/'));
 
@@ -69,12 +69,17 @@ int main() {
 
     float vertices[mesh->mNumVertices * 3];
 
-    for (unsigned int i = 0; i < mesh->mNumVertices; i = i + 3) {
-        vertices[i] = mesh->mVertices[i].x;
-        vertices[i + 1] = mesh->mVertices[i].y;
-        vertices[i + 2] = mesh->mVertices[i].z;
+    for (unsigned int i = 0, j=0; i < mesh->mNumVertices; i++, j = j + 3) {
+        vertices[j] = mesh->mVertices[i].x;
+        vertices[j + 1] = mesh->mVertices[i].y;
+        vertices[j + 2] = mesh->mVertices[i].z;
     }
-
+    for(unsigned int i = 0; i < mesh->mNumVertices*3; i++){
+        fprintf(stderr, "%f ", vertices[i]);
+        if(i%3==0){
+            fprintf(stderr,"\n");
+        }
+    }
     unsigned int k = 0;
     for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
         aiFace face = mesh->mFaces[i];
@@ -82,6 +87,9 @@ int main() {
             indices[k] = face.mIndices[j];
     }
 
+    for(int i = 0; i<k; i++){
+        fprintf(stderr, "%d\n ", indices[i]);
+    }
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
@@ -117,7 +125,7 @@ int main() {
                  GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    //glEnableVertexAttribArray(1);
 
     // Deactivate VAO
     glBindVertexArray(0);
@@ -137,7 +145,7 @@ int main() {
 
         // Activate VAO
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 4930572, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_LINES, k, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 
         // Deactivate VAO
