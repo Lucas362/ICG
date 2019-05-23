@@ -7,14 +7,7 @@
 
 #include "shader.hpp"
 
-/* assimp include files. These three are usually needed. */
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
-
 using namespace std;
-
-unsigned int indices[6300];
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -57,41 +50,76 @@ int main() {
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    Assimp::Importer importer;
-    std::string path =
-        "/home/pablo/Boxes.obj";
-    const aiScene *scene =
-        importer.ReadFile(path, 0);
 
-    string directory = path.substr(0, path.find_last_of('/'));
+    float rotation[16] ={
+        1,0,0,0,
+        0,0.5,-0.9,0,
+        0,0.9,0.5,0,
+        0,0,0,1
+    };
+    float light[3]= {
+        3,0,0
+    };
+    float vertices[24] = {
+        // Front
+        -0.5f, -0.5f, 0.0f,
+        -0.5f, 0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.5f, 0.5f, 0.0f,
 
-    aiMesh *mesh = scene->mMeshes[0];
+        // Back
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, 0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, 0.5f, -0.5f,
+    };
 
-    float vertices[mesh->mNumVertices * 3];
+    int indices[36] = {
+        0,1,2,
+        1,2,3,
 
-    for (unsigned int i = 0, j=0; i < mesh->mNumVertices; i++, j = j + 3) {
-        vertices[j] = mesh->mVertices[i].x;
-        vertices[j + 1] = mesh->mVertices[i].y;
-        vertices[j + 2] = mesh->mVertices[i].z;
-    }
-    for(unsigned int i = 0; i < mesh->mNumVertices*3; i++){
-        fprintf(stderr, "%f ", vertices[i]);
-        if(i%3==0){
-            fprintf(stderr,"\n");
-        }
-    }
-    unsigned int k = 0;
-    for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
-        aiFace face = mesh->mFaces[i];
-        for (unsigned int j = 0; j < face.mNumIndices; j++, k++)
-            indices[k] = face.mIndices[j];
-    }
+        1,3,7,
+        1,5,7,
+        
+        2,3,6,
+        3,6,7,
 
-    for(int i = 0; i<k; i++){
-        fprintf(stderr, "%d\n ", indices[i]);
-    }
+        0,4,2,
+        4,2,6,
+
+        1,0,4,
+        1,4,5,
+
+        5,7,4,
+        4,7,6
+    };
+
+    float normal[36] = {
+        0,0,1,
+        0,0,1,
+
+        0,1,0,
+        0,1,0,
+
+        1,0,0,
+        1,0,0,
+
+        0,-1,0,
+        0,-1,0,
+        
+        -1,0,0,
+        -1,0,0,
+
+        0,0,-1,
+        0,0,-1
+    };
+
+    
     unsigned int VBO;
     glGenBuffers(1, &VBO);
+
+    unsigned int NBO;
+    glGenBuffers(1, &NBO);
 
     unsigned int EBO;
     glGenBuffers(1, &EBO);
@@ -99,6 +127,13 @@ int main() {
     Shader shader("game/assets/shaders/vertex.glsl",
                   "game/assets/shaders/fragment.glsl");
     shader.use();
+
+    unsigned int transformLoc = glGetUniformLocation(shader.program_id,"rotation");
+
+    glUniformMatrix4fv(transformLoc,1,GL_FALSE, rotation);
+
+    unsigned int lightLoc = glGetUniformLocation(shader.program_id,"light");
+    glUniform3fv(lightLoc,1, light);
 
     // Declare group of Buffers
     unsigned int VAO;
@@ -113,9 +148,17 @@ int main() {
     // Malloc and Insert Data into buffer, "Insert into vbo..."
     glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 3 * sizeof(float),
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           (void *)0);
 
+
+    // Activate buffer of data. "Use NBO"
+    glBindBuffer(GL_ARRAY_BUFFER, NBO);
+
+    // Malloc and Insert Data into buffer, "Insert into vbo..."
+    glBufferData(GL_ARRAY_BUFFER, sizeof normal, normal, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     
     // Use EBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -125,7 +168,7 @@ int main() {
                  GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    //glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(1);
 
     // Deactivate VAO
     glBindVertexArray(0);
@@ -145,7 +188,7 @@ int main() {
 
         // Activate VAO
         glBindVertexArray(VAO);
-        glDrawElements(GL_LINES, k, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 
         // Deactivate VAO
