@@ -9,16 +9,19 @@
 
 using namespace std;
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
     glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow *window) {
+void processInput(GLFWwindow *window)
+{
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
 
-int main() {
+int main()
+{
     cout << "Game On" << endl;
 
     glfwInit();
@@ -27,10 +30,11 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Mac OS only
-    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     GLFWwindow *window = glfwCreateWindow(800, 600, "Playground", NULL, NULL);
-    if (window == NULL) {
+    if (window == NULL)
+    {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
@@ -38,7 +42,8 @@ int main() {
 
     glfwMakeContextCurrent(window);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
@@ -50,71 +55,162 @@ int main() {
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+    float rotation[16] = {
+        0.5, 0, -0.9, 0,
+        0, 1.0, 0, 0,
+        0.9, 0, 0.5, 0,
+        0, 0, 0, 1};
 
-    float rotation[16] ={
-        1,0,0,0,
-        0,0.5,-0.9,0,
-        0,0.9,0.5,0,
-        0,0,0,1
-    };
-    float light[3]= {
-        3,0,0
-    };
-    float vertices[24] = {
-        // Front
-        -0.5f, -0.5f, 0.0f,
-        -0.5f, 0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f,
+    float rotation2[16] = {
+        1, 0, 0, 0,
+        0, 0.5, -0.9, 0,
+        0, 0.9, 0.5, 0,
+        0, 0, 0, 1};
+    float light[3] = {
+        1, 0, 0};
+    float vertices[108] = {
+        // // Front
+        // -0.5f,
+        // -0.5f,
+        // 0.0f,
+        // -0.5f,
+        // 0.5f,
+        // 0.0f,
+        // 0.5f,
+        // -0.5f,
+        // 0.0f,
+        // 0.5f,
+        // 0.5f,
+        // 0.0f,
 
-        // Back
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, 0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, 0.5f, -0.5f,
+        // // Back
+        // -0.5f,
+        // -0.5f,
+        // -0.5f,
+        // -0.5f,
+        // 0.5f,
+        // -0.5f,
+        // 0.5f,
+        // -0.5f,
+        // -0.5f,
+        // 0.5f,
+        // 0.5f,
+        // -0.5f,
+        -0.5f, -0.5f, 0,
+        -0.5, 0.5f, 0,
+        0.5f, -0.5f, 0,
+
+        -0.5f, 0.5f, 0,
+        0.5f, 0.5f, 0,
+        0.5f, -0.5f, 0,
+
+        -0.5f, -0.5f, -1,
+        -0.5, 0.5f, -1,
+        0.5f, -0.5f, -1,
+
+        -0.5f, 0.5f, -1,
+        0.5f, 0.5f, -1,
+        0.5f, -0.5f, -1,
+
+        0.5f, -0.5f, 0,
+        0.5f, 0.5f, 0,
+        0.5f, -0.5f, -1,
+
+        0.5f, 0.5f, 0,
+        0.5f, 0.5f, -1,
+        0.5f, -0.5f, -1,
+
+        -0.5f, -0.5f, 0,
+        -0.5f, 0.5f, 0,
+        -0.5f, -0.5f, -1,
+
+        -0.5f, 0.5f, 0,
+        -0.5f, 0.5f, -1,
+        -0.5f, -0.5f, -1,
+
+        -0.5f, 0.5f, 0,
+        -0.5f, 0.5f, -1,
+        0.5f, 0.5f, -1,
+
+        -0.5f, 0.5f, 0,
+        0.5f, 0.5f, -1,
+        0.5f, 0.5f, 0,
+
+        -0.5f, -0.5f, 0,
+        -0.5f, -0.5f, -1,
+        0.5f, -0.5f, -1,
+
+        -0.5f, -0.5f, 0,
+        0.5f, -0.5f, -1,
+        0.5f, -0.5f, 0
+
     };
 
     int indices[36] = {
-        0,1,2,
-        1,2,3,
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8,
+        9, 10, 11,
+        12, 13, 14,
+        15, 16, 17,
+        18, 19, 20,
+        21, 22, 23,
+        24, 25, 26,
+        27, 28, 29,
+        30, 31, 32,
+        33, 34, 35};
 
-        1,3,7,
-        1,5,7,
-        
-        2,3,6,
-        3,6,7,
+    float normal[108] = {
+        0, 0, 1,
+        0, 0, 1,
+        0, 0, 1,
 
-        0,4,2,
-        4,2,6,
+        0, 0, 1,
+        0, 0, 1,
+        0, 0, 1,
 
-        1,0,4,
-        1,4,5,
+        0, 0, -1,
+        0, 0, -1,
+        0, 0, -1,
 
-        5,7,4,
-        4,7,6
+        0, 0, -1,
+        0, 0, -1,
+        0, 0, -1,
+
+        1, 0, 0,
+        1, 0, 0,
+        1, 0, 0,
+
+        1, 0, 0,
+        1, 0, 0,
+        1, 0, 0,
+
+        -1, 0, 0,
+        -1, 0, 0,
+        -1, 0, 0,
+
+        -1, 0, 0,
+        -1, 0, 0,
+        -1, 0, 0,
+
+        0, 1, 0,
+        0, 1, 0,
+        0, 1, 0,
+
+        0, 1, 0,
+        0, 1, 0,
+        0, 1, 0,
+
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0
+
     };
 
-    float normal[36] = {
-        0,0,1,
-        0,0,1,
-
-        0,1,0,
-        0,1,0,
-
-        1,0,0,
-        1,0,0,
-
-        0,-1,0,
-        0,-1,0,
-        
-        -1,0,0,
-        -1,0,0,
-
-        0,0,-1,
-        0,0,-1
-    };
-
-    
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
@@ -128,12 +224,25 @@ int main() {
                   "game/assets/shaders/fragment.glsl");
     shader.use();
 
-    unsigned int transformLoc = glGetUniformLocation(shader.program_id,"rotation");
+    unsigned int transformLoc = glGetUniformLocation(shader.program_id, "rotation");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, rotation);
+    
+    unsigned int transform2Loc = glGetUniformLocation(shader.program_id, "rotation2");
+    glUniformMatrix4fv(transform2Loc, 1, GL_FALSE, rotation2);
 
-    glUniformMatrix4fv(transformLoc,1,GL_FALSE, rotation);
+    // Material
+    glUniform3f(glGetUniformLocation(shader.program_id, "material.ambient"), 1.0f, 0.5f, 0.31f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "material.diffuse"), 1.0f, 0.5f, 0.31f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "material.specular"), 0.5f, 0.5f, 0.5f); 
+    glUniform1f(glGetUniformLocation(shader.program_id, "material.shininess"), 32.0f); 
 
-    unsigned int lightLoc = glGetUniformLocation(shader.program_id,"light");
-    glUniform3fv(lightLoc,1, light);
+
+    // Light
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.position"), 1.2f, 1.0f, 2.0f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.ambient"), 0.2f, 0.2f, 0.2f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.diffuse"), 0.5f, 0.5f, 0.5f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.specular"), 1.0f, 1.0f, 1.0f); 
+
 
     // Declare group of Buffers
     unsigned int VAO;
@@ -151,7 +260,6 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           (void *)0);
 
-
     // Activate buffer of data. "Use NBO"
     glBindBuffer(GL_ARRAY_BUFFER, NBO);
 
@@ -159,7 +267,7 @@ int main() {
     glBufferData(GL_ARRAY_BUFFER, sizeof normal, normal, GL_STATIC_DRAW);
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-    
+
     // Use EBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
@@ -179,7 +287,8 @@ int main() {
 
     glEnable(GL_DEPTH_TEST);
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window))
+    {
         processInput(window);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -188,7 +297,7 @@ int main() {
 
         // Activate VAO
         glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 
         // Deactivate VAO

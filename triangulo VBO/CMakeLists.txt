@@ -47,20 +47,23 @@ endif()
 add_subdirectory("${PROJECT_LIBS_DIR}/glfw")
 include_directories("${PROJECT_LIBS_DIR}/glfw/include")
 
-# ASSIMP
-add_subdirectory("${PROJECT_LIBS_DIR}/assimp")
-include_directories("${PROJECT_LIBS_DIR}/assimp/include")
+# # ASSIMP
+# add_subdirectory("${PROJECT_LIBS_DIR}/assimp")
+# include_directories("${PROJECT_LIBS_DIR}/assimp/include")
 
 # GLAD
 add_subdirectory("${PROJECT_LIBS_DIR}/glad")
 include_directories("${PROJECT_LIBS_DIR}/glad/include")
 
+# glm
+add_subdirectory("${PROJECT_LIBS_DIR}/glm")
+include_directories("${PROJECT_LIBS_DIR}/glm/include")
 
 
 ## Executable
 
 add_executable(${GAME_NAME} ${SOURCES})
-target_link_libraries(${GAME_NAME} glfw glad assimp)
+target_link_libraries(${GAME_NAME} glfw glad glm)
 
 
 #### Custom Commands ####
