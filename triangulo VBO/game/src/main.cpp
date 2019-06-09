@@ -269,25 +269,6 @@ int main()
 
     };
 
-    unsigned int TEX;
-    glGenTextures(1, &TEX);
-    stbi_set_flip_vertically_on_load(true); 
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("../normaltxt.jpg", &width, &height, &nrChannels, 0); 
-    if (data)
-    {
-            glBindTexture(GL_TEXTURE_2D, TEX);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    }else{
-        std::cout << "Failed to load texture" << std::endl;
-    }   
-    stbi_image_free(data);
-
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
@@ -303,6 +284,51 @@ int main()
                   "game/assets/shaders/fragment.glsl");
     shader.use();
 
+
+    unsigned int TEX;
+    glGenTextures(1, &TEX);
+    stbi_set_flip_vertically_on_load(true); 
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load("../normaltxt1.jpg", &width, &height, &nrChannels, 0); 
+    if (data)
+    {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, TEX);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glUniform1i(glGetUniformLocation(shader.program_id, "ourTexture"), 0);
+    }else{
+        std::cout << "Failed to load texture" << std::endl;
+    }   
+    stbi_image_free(data);
+
+
+   unsigned int TEX1;
+    glGenTextures(1, &TEX1);
+    stbi_set_flip_vertically_on_load(true); 
+    unsigned char *data1 = stbi_load("../container2.png", &width, &height, &nrChannels, 0); 
+    if (data)
+    {
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, TEX1);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data1);
+            glGenerateMipmap(GL_TEXTURE_2D);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glUniform1i(glGetUniformLocation(shader.program_id, "ourTexture1"), 1); // set it manually
+            
+    }else{
+        std::cout << "Failed to load texture" << std::endl;
+    }   
+    stbi_image_free(data1);
+
+
     unsigned int transformLoc = glGetUniformLocation(shader.program_id, "rotation");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, rotation);
     
@@ -310,7 +336,7 @@ int main()
     glUniformMatrix4fv(transform2Loc, 1, GL_FALSE, rotation2);
 
     // Material
-    glUniform3f(glGetUniformLocation(shader.program_id, "material.ambient"), 1.0f, 0.5f, 0.31f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "material.ambient"), 1.0f, 0.0f, 1.0f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "material.diffuse"), 1.0f, 0.5f, 0.31f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "material.specular"), 0.5f, 0.5f, 0.5f); 
     glUniform1f(glGetUniformLocation(shader.program_id, "material.shininess"), 32.0f); 
@@ -318,7 +344,7 @@ int main()
 
     // Light
     glUniform3f(glGetUniformLocation(shader.program_id, "light.position"), 0.0f, 0.0f, 2.0f); 
-    glUniform3f(glGetUniformLocation(shader.program_id, "light.ambient"), 0.2f, 0.2f, 0.2f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.ambient"), 1.0f, 1.0f, 1.0f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.diffuse"), 0.5f, 0.5f, 0.5f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.specular"), 1.0f, 1.0f, 1.0f); 
 
@@ -384,7 +410,10 @@ int main()
 
         // Activate VAO
         glBindVertexArray(VAO);
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, TEX);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, TEX1);
         glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 

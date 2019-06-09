@@ -23,12 +23,14 @@ struct Material {
 
 uniform Material material;
 uniform sampler2D ourTexture;
-
+uniform sampler2D ourTexture1;
 void main()
 {
 
     // ambient
-    vec3 ambient = light.ambient * material.ambient;
+    vec3 ambient = light.ambient * texture(ourTexture1, text_cd).rgb;
+
+
     
   
 
@@ -52,4 +54,5 @@ void main()
     vec3 result = (ambient + diffuse + specular);
 
     FragColor = vec4(result, 1.0);
+   // FragColor = texture(ourTexture1, text_cd);
 }
