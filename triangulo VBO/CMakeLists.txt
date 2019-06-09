@@ -60,6 +60,9 @@ add_subdirectory("${PROJECT_LIBS_DIR}/glm")
 include_directories("${PROJECT_LIBS_DIR}/glm/include")
 
 
+# STB
+include_directories("${PROJECT_LIBS_DIR}/stb")
+
 ## Executable
 
 add_executable(${GAME_NAME} ${SOURCES})

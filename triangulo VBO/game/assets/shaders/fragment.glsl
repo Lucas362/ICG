@@ -2,6 +2,7 @@
 
 in vec3 normal_location;
 in vec3 frag_loc;
+in vec2 text_cd;
 out vec4 FragColor;
 
 struct Luz {
@@ -21,27 +22,34 @@ struct Material {
 };
 
 uniform Material material;
+uniform sampler2D ourTexture;
 
 void main()
 {
 
     // ambient
     vec3 ambient = light.ambient * material.ambient;
+    
+  
 
 
     // diffuse
-    vec3 norm = normalize(normal_location);
+   // vec3 norm = normalize(normal_location);
+     vec3 norm = texture(ourTexture,text_cd).rgb;
+     norm = normalize( norm* 2.0 - 1.0);
     vec3 lightDir = normalize(light.position - frag_loc);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = light.diffuse * (diff * material.diffuse);
+    vec3 diffuse = light.diffuse * (diff*material.diffuse);
 
+
+  
     // specular
     vec3 viewVector = normalize(vec3(0.0,0.0,0.0) - frag_loc);
     vec3 reflectVetor = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewVector, reflectVetor), 0.0), material.shininess);
-    vec3 specular = light.specular * (spec * material.specular);
+    vec3 specular = light.specular * (spec*material.specular);
 
-    vec3 result = ambient + diffuse + specular;
+    vec3 result = (ambient + diffuse + specular);
 
     FragColor = vec4(result, 1.0);
 }

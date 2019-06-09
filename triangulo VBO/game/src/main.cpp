@@ -7,6 +7,9 @@
 
 #include "shader.hpp"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
+
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
@@ -146,6 +149,59 @@ int main()
 
     };
 
+   float textcoord[72] = {
+       0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+
+       0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+       
+
+       0.0f,0.0f,
+       0.0f, 1.0f,
+       1.0f, 0.0,
+
+       0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+       
+        0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+
+      0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+       
+       0.0,0.0,
+       0.0, 1.0,
+       1.0, 0.0,
+
+      0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+
+       0.0,0.0,
+       0.0, 1.0,
+       1.0, 0.0,
+
+        0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0,
+
+      0.0,0.0,
+       0.0, 1.0,
+       1.0, 0.0,
+
+        0.0f, 0.0,
+       0.0f, 1.0,
+       1.0f, 0.0
+
+ 
+
+   };
     int indices[36] = {
         0, 1, 2,
         3, 4, 5,
@@ -211,12 +267,33 @@ int main()
 
     };
 
+    unsigned int TEX;
+    glGenTextures(1, &TEX);
+    stbi_set_flip_vertically_on_load(true); 
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load("../normaltxt.jpg", &width, &height, &nrChannels, 0); 
+    if (data)
+    {
+            glBindTexture(GL_TEXTURE_2D, TEX);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    }else{
+        std::cout << "Failed to load texture" << std::endl;
+    }   
+    stbi_image_free(data);
+
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
     unsigned int NBO;
     glGenBuffers(1, &NBO);
-
+   
+   unsigned int TBO;
+    glGenBuffers(1, &TBO);
     unsigned int EBO;
     glGenBuffers(1, &EBO);
 
@@ -268,6 +345,13 @@ int main()
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
 
+ glBindBuffer(GL_ARRAY_BUFFER, TBO);
+
+    // Malloc and Insert Data into buffer, "Insert into vbo..."
+    glBufferData(GL_ARRAY_BUFFER, sizeof textcoord, textcoord, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
+
     // Use EBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
@@ -277,6 +361,7 @@ int main()
 
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+   glEnableVertexAttribArray(2);
 
     // Deactivate VAO
     glBindVertexArray(0);
@@ -297,6 +382,7 @@ int main()
 
         // Activate VAO
         glBindVertexArray(VAO);
+        glBindTexture(GL_TEXTURE_2D, TEX);
         glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 
