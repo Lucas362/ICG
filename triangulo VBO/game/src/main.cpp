@@ -115,22 +115,23 @@ int main()
         0.5f, 0.5f, -1,
         0.5f, -0.5f, -1,
 
+/// x cte
         0.5f, -0.5f, 0,
         0.5f, 0.5f, 0,
         0.5f, -0.5f, -1,
 
+        0.5f, -0.5f, -1,
         0.5f, 0.5f, 0,
         0.5f, 0.5f, -1,
-        0.5f, -0.5f, -1,
 
         -0.5f, -0.5f, 0,
         -0.5f, 0.5f, 0,
-        -0.5f, -0.5f, -1,
-
-        -0.5f, 0.5f, 0,
         -0.5f, 0.5f, -1,
-        -0.5f, -0.5f, -1,
 
+        -0.5f, -0.5f, -1,
+        -0.5f, 0.5f, 0,
+        -0.5f, -0.5f, -1,
+// y cte
         -0.5f, 0.5f, 0,
         -0.5f, 0.5f, -1,
         0.5f, 0.5f, -1,
@@ -154,50 +155,51 @@ int main()
        0.0f, 1.0,
        1.0f, 0.0,
 
-       0.0f, 0.0,
        0.0f, 1.0,
-       1.0f, 0.0,
-       
-
-       0.0f,0.0f,
-       0.0f, 1.0f,
+       1.0f, 1.0,
        1.0f, 0.0,
 
        0.0f, 0.0,
        0.0f, 1.0,
        1.0f, 0.0,
+
+       0.0f, 1.0,
+       1.0f, 1.0,
+       1.0f, 0.0,
+
+       // face x const
+      1.0f, 0.0,
+       1.0f, 1.0,
+       0.0f, 0.0,
+
+       0.0f, 0.0,
+       1.0f, 1.0,
+       0.0f, 1.0,
        
-        0.0f, 0.0,
-       0.0f, 1.0,
        1.0f, 0.0,
+       1.0f, 1.0,
+       0.0f, 0.0,
 
-      0.0f, 0.0,
+       0.0f, 0.0,
+       1.0f, 1.0,
        0.0f, 1.0,
-       1.0f, 0.0,
-       
-       0.0,0.0,
+       //face y cte
+
+       1.0,0.0,
+       0.0, 0.0,
        0.0, 1.0,
-       1.0, 0.0,
 
-      0.0f, 0.0,
-       0.0f, 1.0,
        1.0f, 0.0,
-
-       0.0,0.0,
-       0.0, 1.0,
-       1.0, 0.0,
-
-        0.0f, 0.0,
        0.0f, 1.0,
+       1.0f, 1.0,
+
+      1.0,0.0,
+       0.0, 0.0,
+       0.0, 1.0,
+
        1.0f, 0.0,
-
-      0.0,0.0,
-       0.0, 1.0,
-       1.0, 0.0,
-
-        0.0f, 0.0,
        0.0f, 1.0,
-       1.0f, 0.0
+       1.0f, 1.0
 
  
 
@@ -315,7 +317,7 @@ int main()
 
 
     // Light
-    glUniform3f(glGetUniformLocation(shader.program_id, "light.position"), 1.2f, 1.0f, 2.0f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.position"), 0.0f, 0.0f, 2.0f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.ambient"), 0.2f, 0.2f, 0.2f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.diffuse"), 0.5f, 0.5f, 0.5f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.specular"), 1.0f, 1.0f, 1.0f); 
