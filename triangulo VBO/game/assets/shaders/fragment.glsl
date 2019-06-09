@@ -24,16 +24,23 @@ struct Material {
 uniform Material material;
 uniform sampler2D ourTexture;
 uniform sampler2D ourTexture1;
+uniform sampler2D ourTexture2;
 void main()
 {
+    float light_cte = 1.0f;
+    float light_linear = 0.09f;
+    float light_quadratic = 0.032f;
+
+    vec3 cam_dir = vec3(0.0, 0.0,-1.0f);
+    float cutOff = cos(radians(40.0f));
+    
+
+    float distance    = length(light.position - frag_loc);
+    float attenuation = 1.0 / (light_cte + light_linear * distance + 
+    		    light_quadratic * (distance * distance)); 
 
     // ambient
-    vec3 ambient = light.ambient * texture(ourTexture1, text_cd).rgb;
-
-
     
-  
-
 
     // diffuse
    // vec3 norm = normalize(normal_location);
@@ -41,7 +48,7 @@ void main()
      norm = normalize( norm* 2.0 - 1.0);
     vec3 lightDir = normalize(light.position - frag_loc);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = light.diffuse * (diff*material.diffuse);
+    vec3 diffuse = light.diffuse * (diff* texture(ourTexture1, text_cd).rgb);
 
 
   
@@ -49,10 +56,21 @@ void main()
     vec3 viewVector = normalize(vec3(0.0,0.0,0.0) - frag_loc);
     vec3 reflectVetor = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewVector, reflectVetor), 0.0), material.shininess);
-    vec3 specular = light.specular * (spec*material.specular);
+    vec3 specular = light.specular * (spec * texture(ourTexture2, text_cd).rgb);
 
-    vec3 result = (ambient + diffuse + specular);
+    float theta = dot(cam_dir,normalize(-viewVector));
 
-    FragColor = vec4(result, 1.0);
-   // FragColor = texture(ourTexture1, text_cd);
+    vec3 ambient = vec3(0.0,0.0,0.0);
+
+
+   // ambient  *= attenuation; 
+    //diffuse  *= attenuation;
+    //specular *= attenuation; 
+   // if(theta > cutOff){
+         ambient = light.ambient * texture(ourTexture1, text_cd).rgb;
+    //}
+    vec3 result = (ambient+ diffuse + specular);
+    FragColor = vec4(result, 1.0);     
+    
+
 }

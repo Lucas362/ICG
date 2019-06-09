@@ -317,10 +317,6 @@ int main()
             glBindTexture(GL_TEXTURE_2D, TEX1);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data1);
             glGenerateMipmap(GL_TEXTURE_2D);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); // for this tutorial: use GL_CLAMP_TO_EDGE to prevent semi-transparent borders. Due to interpolation it takes texels from next repeat 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glUniform1i(glGetUniformLocation(shader.program_id, "ourTexture1"), 1); // set it manually
             
     }else{
@@ -328,6 +324,22 @@ int main()
     }   
     stbi_image_free(data1);
 
+unsigned int TEX2;
+    glGenTextures(1, &TEX2);
+    stbi_set_flip_vertically_on_load(true); 
+    unsigned char *data2 = stbi_load("../30329970_5189552e1d_z.jpg", &width, &height, &nrChannels, 0); 
+    if (data)
+    {
+            glActiveTexture(GL_TEXTURE2);
+            glBindTexture(GL_TEXTURE_2D, TEX2);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
+            glGenerateMipmap(GL_TEXTURE_2D);
+            glUniform1i(glGetUniformLocation(shader.program_id, "ourTexture2"), 2); // set it manually
+            
+    }else{
+        std::cout << "Failed to load texture" << std::endl;
+    }   
+    stbi_image_free(data2);
 
     unsigned int transformLoc = glGetUniformLocation(shader.program_id, "rotation");
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, rotation);
@@ -343,7 +355,7 @@ int main()
 
 
     // Light
-    glUniform3f(glGetUniformLocation(shader.program_id, "light.position"), 0.0f, 0.0f, 2.0f); 
+    glUniform3f(glGetUniformLocation(shader.program_id, "light.position"), 0.0f, 0.0f, 0.0f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.ambient"), 1.0f, 1.0f, 1.0f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.diffuse"), 0.5f, 0.5f, 0.5f); 
     glUniform3f(glGetUniformLocation(shader.program_id, "light.specular"), 1.0f, 1.0f, 1.0f); 
@@ -414,6 +426,9 @@ int main()
         glBindTexture(GL_TEXTURE_2D, TEX);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, TEX1);
+          glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, TEX2);
+
         glDrawElements(GL_TRIANGLES, 108, GL_UNSIGNED_INT, 0);
         // glDrawArrays(GL_POINTS, 0, 3);
 
