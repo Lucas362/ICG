@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -dynamiclib -Wl,-headerpad_max_install_names  -o libglm_shared.dylib -install_name @rpath/libglm_shared.dylib CMakeFiles/glm_shared.dir/detail/glm.cpp.o 
