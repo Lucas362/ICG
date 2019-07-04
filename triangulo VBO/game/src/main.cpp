@@ -62,16 +62,15 @@ int main()
 
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvsok;
-    std::vector<glm::vec3> normalsok;
+    std::vector<glm::vec3> normalok;
 
-    bool xablau = load3DOBJok("game/assets/obj/cube.obj", vertices, uvsok, normalsok);
+    bool xablau = load3DOBJok("game/assets/obj/cube.obj", vertices, uvsok, normalok);
     // std::string s = std::to_string(&vertices[0]);
     // cout << s << endl;
     cout << vertices.size() << endl;
-    if(xablau) {
-        glBufferData(GL_ARRAY_BUFFER, sizeof vertices, &vertices[0], GL_STATIC_DRAW);
+    for (int i = 0; i < vertices.size(); i++) {
+       std::cout << uvsok[i].x << ' ' << uvsok[i].y << std::endl;   // problem line
     }
-
     float rotation[16] = {
         0.5, 0, -0.9, 0,
         0, 1.0, 0, 0,
@@ -233,14 +232,6 @@ int main()
         33, 34, 35};
 
     float normal[108] = {
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1,
-
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1,
-
         0, 0, -1,
         0, 0, -1,
         0, 0, -1,
@@ -248,14 +239,6 @@ int main()
         0, 0, -1,
         0, 0, -1,
         0, 0, -1,
-
-        1, 0, 0,
-        1, 0, 0,
-        1, 0, 0,
-
-        1, 0, 0,
-        1, 0, 0,
-        1, 0, 0,
 
         -1, 0, 0,
         -1, 0, 0,
@@ -265,17 +248,33 @@ int main()
         -1, 0, 0,
         -1, 0, 0,
 
-        0, 1, 0,
-        0, 1, 0,
-        0, 1, 0,
+        0, 0, 1,
+        0, 0, 1,
+        0, 0, 1,
 
-        0, 1, 0,
-        0, 1, 0,
-        0, 1, 0,
+        0, 0, 1,
+        0, 0, 1,
+        0, 0, 1,
+
+        1, 0, 0,
+        1, 0, 0,
+        1, 0, 0,
+
+        1, 0, 0,
+        1, 0, 0,
+        1, 0, 0,
 
         0, -1, 0,
         0, -1, 0,
         0, -1, 0,
+
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+
+        0, 0, -1,
+        0, 0, -1,
+        0, 0, -1,
 
         0, -1, 0,
         0, -1, 0,
@@ -386,7 +385,7 @@ unsigned int TEX2;
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     // Malloc and Insert Data into buffer, "Insert into vbo..."
-    glBufferData(GL_ARRAY_BUFFER, sizeof vertices, &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           (void *)0);

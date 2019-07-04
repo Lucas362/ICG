@@ -45,6 +45,7 @@ bool load3DOBJok(
         // read the first word of the line
 
         int res = fscanf(file, "%s", lineHeader);
+        printf("%d", res);
         if (res == EOF) {
             break; // EOF = End Of File. Quit the loop.
         } else {
@@ -64,6 +65,11 @@ bool load3DOBJok(
             } else if ( strcmp( lineHeader, "f" ) == 0 ){
                 std::string vertex1, vertex2, vertex3;
                 unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+                fprintf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+                    &vertexIndex[0], &uvIndex[0], &normalIndex[0],
+                    &vertexIndex[1], &uvIndex[1], &normalIndex[1],
+                    &vertexIndex[2], &uvIndex[2], &normalIndex[2]
+                );
                 int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
                     &vertexIndex[0], &uvIndex[0], &normalIndex[0],
                     &vertexIndex[1], &uvIndex[1], &normalIndex[1],
@@ -89,6 +95,7 @@ bool load3DOBJok(
     // For each vertex of each triangle
     for( unsigned int i=0; i<vertexIndices.size(); i++ ){
         unsigned int vertexIndex = vertexIndices[i];
+        // printf("%d\n", vertexIndex);
         unsigned int uvIndex = uvIndices[i];
 		unsigned int normalIndex = normalIndices[i];
 
