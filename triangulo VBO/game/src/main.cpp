@@ -10,6 +10,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
+#include "Model.hpp"
+
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
@@ -58,6 +60,18 @@ int main()
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvsok;
+    std::vector<glm::vec3> normalsok;
+
+    bool xablau = load3DOBJok("game/assets/obj/cube.obj", vertices, uvsok, normalsok);
+    // std::string s = std::to_string(&vertices[0]);
+    // cout << s << endl;
+    cout << vertices.size() << endl;
+    if(xablau) {
+        glBufferData(GL_ARRAY_BUFFER, sizeof vertices, &vertices[0], GL_STATIC_DRAW);
+    }
+
     float rotation[16] = {
         0.5, 0, -0.9, 0,
         0, 1.0, 0, 0,
@@ -71,84 +85,84 @@ int main()
         0, 0, 0, 1};
     float light[3] = {
         1, 0, 0};
-    float vertices[108] = {
-        // // Front
-        // -0.5f,
-        // -0.5f,
-        // 0.0f,
-        // -0.5f,
-        // 0.5f,
-        // 0.0f,
-        // 0.5f,
-        // -0.5f,
-        // 0.0f,
-        // 0.5f,
-        // 0.5f,
-        // 0.0f,
+//     float vertices[108] = {
+//         // // Front
+//         // -0.5f,
+//         // -0.5f,
+//         // 0.0f,
+//         // -0.5f,
+//         // 0.5f,
+//         // 0.0f,
+//         // 0.5f,
+//         // -0.5f,
+//         // 0.0f,
+//         // 0.5f,
+//         // 0.5f,
+//         // 0.0f,
 
-        // // Back
-        // -0.5f,
-        // -0.5f,
-        // -0.5f,
-        // -0.5f,
-        // 0.5f,
-        // -0.5f,
-        // 0.5f,
-        // -0.5f,
-        // -0.5f,
-        // 0.5f,
-        // 0.5f,
-        // -0.5f,
-        -0.5f, -0.5f, 0,
-        -0.5, 0.5f, 0,
-        0.5f, -0.5f, 0,
+//         // // Back
+//         // -0.5f,
+//         // -0.5f,
+//         // -0.5f,
+//         // -0.5f,
+//         // 0.5f,
+//         // -0.5f,
+//         // 0.5f,
+//         // -0.5f,
+//         // -0.5f,
+//         // 0.5f,
+//         // 0.5f,
+//         // -0.5f,
+//         -0.5f, -0.5f, 0,
+//         -0.5, 0.5f, 0,
+//         0.5f, -0.5f, 0,
 
-        -0.5f, 0.5f, 0,
-        0.5f, 0.5f, 0,
-        0.5f, -0.5f, 0,
+//         -0.5f, 0.5f, 0,
+//         0.5f, 0.5f, 0,
+//         0.5f, -0.5f, 0,
 
-        -0.5f, -0.5f, -1,
-        -0.5, 0.5f, -1,
-        0.5f, -0.5f, -1,
+//         -0.5f, -0.5f, -1,
+//         -0.5, 0.5f, -1,
+//         0.5f, -0.5f, -1,
 
-        -0.5f, 0.5f, -1,
-        0.5f, 0.5f, -1,
-        0.5f, -0.5f, -1,
+//         -0.5f, 0.5f, -1,
+//         0.5f, 0.5f, -1,
+//         0.5f, -0.5f, -1,
 
-/// x cte
-        0.5f, -0.5f, 0,
-        0.5f, 0.5f, 0,
-        0.5f, -0.5f, -1,
+// /// x cte
+//         0.5f, -0.5f, 0,
+//         0.5f, 0.5f, 0,
+//         0.5f, -0.5f, -1,
 
-        0.5f, -0.5f, -1,
-        0.5f, 0.5f, 0,
-        0.5f, 0.5f, -1,
+//         0.5f, -0.5f, -1,
+//         0.5f, 0.5f, 0,
+//         0.5f, 0.5f, -1,
 
-        -0.5f, -0.5f, 0,
-        -0.5f, 0.5f, 0,
-        -0.5f, 0.5f, -1,
+//         -0.5f, -0.5f, 0,
+//         -0.5f, 0.5f, 0,
+//         -0.5f, 0.5f, -1,
 
-        -0.5f, -0.5f, -1,
-        -0.5f, 0.5f, 0,
-        -0.5f, -0.5f, -1,
-// y cte
-        -0.5f, 0.5f, 0,
-        -0.5f, 0.5f, -1,
-        0.5f, 0.5f, -1,
+//         -0.5f, -0.5f, -1,
+//         -0.5f, 0.5f, 0,
+//         -0.5f, -0.5f, -1,
+// // y cte
+//         -0.5f, 0.5f, 0,
+//         -0.5f, 0.5f, -1,
+//         0.5f, 0.5f, -1,
 
-        -0.5f, 0.5f, 0,
-        0.5f, 0.5f, -1,
-        0.5f, 0.5f, 0,
+//         -0.5f, 0.5f, 0,
+//         0.5f, 0.5f, -1,
+//         0.5f, 0.5f, 0,
 
-        -0.5f, -0.5f, 0,
-        -0.5f, -0.5f, -1,
-        0.5f, -0.5f, -1,
+//         -0.5f, -0.5f, 0,
+//         -0.5f, -0.5f, -1,
+//         0.5f, -0.5f, -1,
 
-        -0.5f, -0.5f, 0,
-        0.5f, -0.5f, -1,
-        0.5f, -0.5f, 0
+//         -0.5f, -0.5f, 0,
+//         0.5f, -0.5f, -1,
+//         0.5f, -0.5f, 0
 
-    };
+//     };
 
    float textcoord[72] = {
        0.0f, 0.0,
@@ -372,7 +386,7 @@ unsigned int TEX2;
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     // Malloc and Insert Data into buffer, "Insert into vbo..."
-    glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof vertices, &vertices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           (void *)0);
