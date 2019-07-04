@@ -61,15 +61,15 @@ int main()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> uvsok;
-    std::vector<glm::vec3> normalok;
+    std::vector<glm::vec2> textcoord;
+    std::vector<glm::vec3> normal;
 
-    bool xablau = load3DOBJok("game/assets/obj/cube.obj", vertices, uvsok, normalok);
+    bool xablau = load3DOBJok("game/assets/obj/cube.obj", vertices, textcoord, normal);
     // std::string s = std::to_string(&vertices[0]);
     // cout << s << endl;
     cout << vertices.size() << endl;
-    for (int i = 0; i < vertices.size(); i++) {
-       std::cout << uvsok[i].x << ' ' << uvsok[i].y << std::endl;   // problem line
+    for (int i = 0; i < textcoord.size(); i++) {
+       std::cout << textcoord[i].x << ' ' << textcoord[i].y << std::endl;
     }
     float rotation[16] = {
         0.5, 0, -0.9, 0,
@@ -163,60 +163,60 @@ int main()
 
 //     };
 
-   float textcoord[72] = {
-       0.0f, 0.0,
-       0.0f, 1.0,
-       1.0f, 0.0,
+//    float textcoord[72] = {
+//        0.0f, 0.0,
+//        0.0f, 1.0,
+//        1.0f, 0.0,
 
-       0.0f, 1.0,
-       1.0f, 1.0,
-       1.0f, 0.0,
+//        0.0f, 1.0,
+//        1.0f, 1.0,
+//        1.0f, 0.0,
 
-       0.0f, 0.0,
-       0.0f, 1.0,
-       1.0f, 0.0,
+//        0.0f, 0.0,
+//        0.0f, 1.0,
+//        1.0f, 0.0,
 
-       0.0f, 1.0,
-       1.0f, 1.0,
-       1.0f, 0.0,
+//        0.0f, 1.0,
+//        1.0f, 1.0,
+//        1.0f, 0.0,
 
-       // face x const
-      1.0f, 0.0,
-       1.0f, 1.0,
-       0.0f, 0.0,
+//        // face x const
+//       1.0f, 0.0,
+//        1.0f, 1.0,
+//        0.0f, 0.0,
 
-       0.0f, 0.0,
-       1.0f, 1.0,
-       0.0f, 1.0,
+//        0.0f, 0.0,
+//        1.0f, 1.0,
+//        0.0f, 1.0,
        
-       1.0f, 0.0,
-       1.0f, 1.0,
-       0.0f, 0.0,
+//        1.0f, 0.0,
+//        1.0f, 1.0,
+//        0.0f, 0.0,
 
-       0.0f, 0.0,
-       1.0f, 1.0,
-       0.0f, 1.0,
-       //face y cte
+//        0.0f, 0.0,
+//        1.0f, 1.0,
+//        0.0f, 1.0,
+//        //face y cte
 
-       1.0,0.0,
-       0.0, 0.0,
-       0.0, 1.0,
+//        1.0,0.0,
+//        0.0, 0.0,
+//        0.0, 1.0,
 
-       1.0f, 0.0,
-       0.0f, 1.0,
-       1.0f, 1.0,
+//        1.0f, 0.0,
+//        0.0f, 1.0,
+//        1.0f, 1.0,
 
-      1.0,0.0,
-       0.0, 0.0,
-       0.0, 1.0,
+//       1.0,0.0,
+//        0.0, 0.0,
+//        0.0, 1.0,
 
-       1.0f, 0.0,
-       0.0f, 1.0,
-       1.0f, 1.0
+//        1.0f, 0.0,
+//        0.0f, 1.0,
+//        1.0f, 1.0
 
  
 
-   };
+//    };
     int indices[36] = {
         0, 1, 2,
         3, 4, 5,
@@ -231,56 +231,56 @@ int main()
         30, 31, 32,
         33, 34, 35};
 
-    float normal[108] = {
-        0, 0, -1,
-        0, 0, -1,
-        0, 0, -1,
+    // float normal[108] = {
+    //     0, 0, -1,
+    //     0, 0, -1,
+    //     0, 0, -1,
 
-        0, 0, -1,
-        0, 0, -1,
-        0, 0, -1,
+    //     0, 0, -1,
+    //     0, 0, -1,
+    //     0, 0, -1,
 
-        -1, 0, 0,
-        -1, 0, 0,
-        -1, 0, 0,
+    //     -1, 0, 0,
+    //     -1, 0, 0,
+    //     -1, 0, 0,
 
-        -1, 0, 0,
-        -1, 0, 0,
-        -1, 0, 0,
+    //     -1, 0, 0,
+    //     -1, 0, 0,
+    //     -1, 0, 0,
 
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1,
+    //     0, 0, 1,
+    //     0, 0, 1,
+    //     0, 0, 1,
 
-        0, 0, 1,
-        0, 0, 1,
-        0, 0, 1,
+    //     0, 0, 1,
+    //     0, 0, 1,
+    //     0, 0, 1,
 
-        1, 0, 0,
-        1, 0, 0,
-        1, 0, 0,
+    //     1, 0, 0,
+    //     1, 0, 0,
+    //     1, 0, 0,
 
-        1, 0, 0,
-        1, 0, 0,
-        1, 0, 0,
+    //     1, 0, 0,
+    //     1, 0, 0,
+    //     1, 0, 0,
 
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0,
+    //     0, -1, 0,
+    //     0, -1, 0,
+    //     0, -1, 0,
 
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0,
+    //     0, -1, 0,
+    //     0, -1, 0,
+    //     0, -1, 0,
 
-        0, 0, -1,
-        0, 0, -1,
-        0, 0, -1,
+    //     0, 0, -1,
+    //     0, 0, -1,
+    //     0, 0, -1,
 
-        0, -1, 0,
-        0, -1, 0,
-        0, -1, 0
+    //     0, -1, 0,
+    //     0, -1, 0,
+    //     0, -1, 0
 
-    };
+    // };
 
     unsigned int VBO;
     glGenBuffers(1, &VBO);
@@ -394,14 +394,14 @@ unsigned int TEX2;
     glBindBuffer(GL_ARRAY_BUFFER, NBO);
 
     // Malloc and Insert Data into buffer, "Insert into vbo..."
-    glBufferData(GL_ARRAY_BUFFER, sizeof normal, normal, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, normal.size() * sizeof(glm::vec2), &normal[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
 
- glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    glBindBuffer(GL_ARRAY_BUFFER, TBO);
 
     // Malloc and Insert Data into buffer, "Insert into vbo..."
-    glBufferData(GL_ARRAY_BUFFER, sizeof textcoord, textcoord, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, textcoord.size() * sizeof(glm::vec2), &textcoord[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
 
