@@ -64,7 +64,7 @@ int main()
     std::vector<glm::vec2> textcoord;
     std::vector<glm::vec3> normal;
 
-    bool xablau = load3DOBJok("game/assets/obj/cube.obj", vertices, textcoord, normal);
+    bool xablau = load3DOBJok("game/assets/obj/MaleLow.obj", vertices, textcoord, normal);
     // std::string s = std::to_string(&vertices[0]);
     // cout << s << endl;
     cout << vertices.size() << endl;
